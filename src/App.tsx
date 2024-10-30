@@ -1,9 +1,27 @@
 import "./App.css";
+import MainLayout from "./components/common/MainLayout.tsx";
+import Tabs, {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+} from "./components/common/Tabs.tsx";
 
 function App() {
   return (
     <>
-      <div className="bg-red-50">123</div>
+      <MainLayout>
+        <Tabs>
+          <TabList>
+            <Tab index={0}>tab1</Tab>
+            <Tab index={1}>tab2</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel index={0}>panel1</TabPanel>
+            <TabPanel index={1}>panel2</TabPanel>
+          </TabPanels>
+        </Tabs>
+      </MainLayout>
     </>
   );
 }
