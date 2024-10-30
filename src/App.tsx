@@ -6,6 +6,12 @@ import Tabs, {
   TabPanel,
   TabPanels,
 } from "./components/common/Tabs.tsx";
+import Panel, {
+  PanelBody,
+  PanelCap,
+  PanelFooter,
+  PanelHeader,
+} from "./components/common/Panel.tsx";
 
 function App() {
   return (
@@ -17,7 +23,14 @@ function App() {
             <Tab index={1}>tab2</Tab>
           </TabList>
           <TabPanels>
-            <TabPanel index={0}>panel1</TabPanel>
+            <TabPanel index={0}>
+              <PanelCap>Cap</PanelCap>
+              <Panel>
+                <PanelHeader>header</PanelHeader>
+                <PanelBody>Body</PanelBody>
+                <PanelFooter>footer</PanelFooter>
+              </Panel>
+            </TabPanel>
             <TabPanel index={1}>panel2</TabPanel>
           </TabPanels>
         </Tabs>
