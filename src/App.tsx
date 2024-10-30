@@ -12,6 +12,7 @@ import Panel, {
   PanelFooter,
   PanelHeader,
 } from "./components/common/Panel.tsx";
+import Dropdown from "./components/common/Dropdown.tsx";
 
 function App() {
   return (
@@ -26,7 +27,17 @@ function App() {
             <TabPanel index={0}>
               <PanelCap>Cap</PanelCap>
               <Panel>
-                <PanelHeader>header</PanelHeader>
+                <PanelHeader>
+                  <Dropdown<string>
+                    options={[
+                      { label: <div>1</div>, value: `1` },
+                      { label: <div>2</div>, value: `2` },
+                      { label: <div>3</div>, value: `3` },
+                      { label: <div>4</div>, value: `4` },
+                    ]}
+                    onChange={(value) => console.log(value)}
+                  />
+                </PanelHeader>
                 <PanelBody>Body</PanelBody>
                 <PanelFooter>footer</PanelFooter>
               </Panel>
