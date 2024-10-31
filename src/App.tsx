@@ -7,8 +7,9 @@ import Tabs, {
   TabPanels,
 } from "./components/common/Tabs.tsx";
 
-import QuestionEditor from "./components/edit/QuestionEditor.tsx";
 import { SurveyStoreProvider } from "./store/store.tsx";
+import SectionEditor from "./components/edit/SectionEditor.tsx";
+import SectionEditorList from "./components/edit/SectionEditorList.tsx";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
             </TabList>
             <TabPanels>
               <TabPanel index={0}>
-                <QuestionEditor />
+                <SectionEditorList />
               </TabPanel>
               <TabPanel index={1}>123</TabPanel>
             </TabPanels>

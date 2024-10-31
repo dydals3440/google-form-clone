@@ -11,6 +11,7 @@ import ArrowIcon from "../../assets/arrow.svg?react";
 import useOutsideClick from "../../hooks/common/useOutsideClick.ts";
 
 interface DropdownProps<T> {
+  defaultValue?: T;
   placeholder?: string;
   options: DropdownOption<T>[];
   // eslint-disable-next-line no-unused-vars
@@ -21,13 +22,18 @@ interface DropdownProps<T> {
 // 1. 메뉴 오픈 상태
 // 2. 선택된 정보
 export default function Dropdown<T>({
+  defaultValue,
   placeholder,
   options,
   onChange,
 }: DropdownProps<T>) {
   const [opened, setOpened] = useState<boolean>(false);
   // -1 not selected
-  const [selected, setSelected] = useState<number>(-1);
+  const [selected, setSelected] = useState<number>(
+    defaultValue
+      ? options.findIndex((option) => option.value === defaultValue)
+      : -1,
+  );
 
   // open과 close는 한번생성되면 절 대 변경되지 않는 것.
   const open = useCallback(() => setOpened(true), []);
@@ -109,7 +115,7 @@ function DropdownMenu() {
   return opened ? (
     <div
       ref={containerRef as RefObject<HTMLDivElement>}
-      className="absolute left-0 top-62 border border-gray300 rounded-10 flex flex-col min-w-197 bg-white"
+      className="absolute left-0 top-62 border border-gray300 rounded-10 flex flex-col min-w-197 bg-white z-10"
     >
       {options.map((option, index) => (
         <DropdownMenuItem

@@ -1,31 +1,31 @@
-import Question from "../models/question.ts";
 import { makeAutoObservable } from "mobx";
 import { createContext, PropsWithChildren, useContext } from "react";
+import Section from "../models/section.ts";
 
 class SurveyStore {
-  questions: Question[] = [];
+  sections: Section[] = [];
+  // 포커스된, 아이디의 질문을 추가하고 싶음.
+  focusedSectionId: number | null = null;
 
   constructor() {
     makeAutoObservable(this);
+    this.sections = [new Section()];
+    this.focusedSectionId = this.sections[0].id;
+  }
+
+  addSection() {
+    const section = new Section();
+    this.sections.push(section);
+    this.focusedSectionId = section.id;
   }
 
   addQuestion() {
-    this.questions.push(new Question());
-  }
+    const section = this.sections.find(
+      (section) => section.id === this.focusedSectionId,
+    );
 
-  removeQuestion(id: number) {
-    this.questions = this.questions.filter((question) => question.id !== id);
-  }
-
-  copyQuestion(id: number) {
-    const question = this.questions.find((q) => q.id === id);
-    if (question) {
-      this.questions.push(
-        new Question({
-          ...question,
-          id: Date.now(),
-        }),
-      );
+    if (section) {
+      section.addQuestion();
     }
   }
 }
