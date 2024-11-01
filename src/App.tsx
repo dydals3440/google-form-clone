@@ -8,7 +8,6 @@ import Tabs, {
 } from "./components/common/Tabs.tsx";
 
 import { SurveyStoreProvider } from "./store/store.tsx";
-import SectionEditor from "./components/edit/SectionEditor.tsx";
 import SectionEditorList from "./components/edit/SectionEditorList.tsx";
 
 function App() {
