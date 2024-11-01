@@ -26,7 +26,9 @@ export default class Question implements QuestionData {
     },
   ) {
     // Observable 하게 mobx가 관찰.
-    makeAutoObservable(this);
+    // QuestionTypeEdtior에서 드롭다운에, 밸류값을 설정하도록 함, 자바스크립트 같은 경우에서, This의 값이
+    // Execution Context에 따라 변경됨, 현재 이벤트 객체에서 실행되고 있어, 모델의 클래스에서 this를 잃어버림.
+    makeAutoObservable(this, {}, { autoBind: true });
     // 정의된 파라미터와 클래스의 필드를 연결.
     this.id = data.id;
     this.title = data.title;

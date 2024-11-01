@@ -1,86 +1,57 @@
-import Panel, { PanelBody, PanelHeader } from "../common/Panel.tsx";
+import Panel, {
+  PanelBody,
+  PanelFooter,
+  PanelHeader,
+} from "../common/Panel.tsx";
 import Input from "../common/Input.tsx";
-import Dropdown from "../common/Dropdown.tsx";
-import { QuestionType } from "../../types/app.ts";
+
 import QuestionBodyEditor from "./QuestionBodyEditor.tsx";
 import Question from "../../models/question.ts";
 import { observer } from "mobx-react-lite";
+import QuestionTypeEditor from "./QuestionTypeEditor.tsx";
+
+import CopyIcon from "../../assets/copy.svg?react";
+import DeleteIcon from "../../assets/trash.svg?react";
+import Divider from "../common/Divider.tsx";
+import Switch from "../common/Switch.tsx";
 
 interface Props {
   question: Question;
+  onCopy: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
-const QuestionEditor = observer(function QuestionEditor({ question }: Props) {
+const QuestionEditor = observer(function QuestionEditor({
+  question,
+  onCopy,
+  onDelete,
+}: Props) {
   return (
     <Panel>
       <PanelHeader className="flex mb-25">
         <Input className="flex-1 mr-30" />
-        <Dropdown<QuestionType>
-          defaultValue={question.type}
-          onChange={(value) => question.setType(value)}
-          options={[
-            {
-              label: (
-                <div>
-                  <span>단답형</span>
-                </div>
-              ),
-              value: "shortText",
-            },
-            {
-              label: (
-                <div>
-                  <span>장문형</span>
-                </div>
-              ),
-              value: "longText",
-            },
-            {
-              label: (
-                <div>
-                  <span>객관식</span>
-                </div>
-              ),
-              value: "multipleChoice",
-            },
-            {
-              label: (
-                <div>
-                  <span>체크박스</span>
-                </div>
-              ),
-              value: "checkbox",
-            },
-            {
-              label: (
-                <div>
-                  <span>드롭다운</span>
-                </div>
-              ),
-              value: "dropdown",
-            },
-            {
-              label: (
-                <div>
-                  <span>날짜</span>
-                </div>
-              ),
-              value: "date",
-            },
-            {
-              label: (
-                <div>
-                  <span>시간</span>
-                </div>
-              ),
-              value: "time",
-            },
-          ]}
-        />
+        <QuestionTypeEditor type={question.type} onChange={question.setType} />
       </PanelHeader>
       <PanelBody>
         <QuestionBodyEditor type={question.type} />
       </PanelBody>
+      <PanelFooter className="flex justify-end gap-x-24 h-24">
+        <button onClick={() => onCopy(question.id)}>
+          <CopyIcon />
+        </button>
+        <button onClick={() => onDelete(question.id)}>
+          <DeleteIcon />
+        </button>
+        <Divider direction="vertical" />
+        <div className="flex items-center">
+          <span className="mr-13">필수</span>
+          <Switch
+            id={`${question.id}_switch`}
+            checked={question.required}
+            onChange={question.setRequired}
+          />
+        </div>
+      </PanelFooter>
     </Panel>
   );
 });

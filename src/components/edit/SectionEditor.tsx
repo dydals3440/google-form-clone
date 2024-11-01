@@ -17,7 +17,12 @@ const SectionEditor = observer(function SectionEditor({ section }: Props) {
     <div className="[&>*]:mb-24">
       <SectionTitleEditor section={section} capTitle="2개 중 1섹션" />
       {section.questions.map((question) => (
-        <QuestionEditor key={question.id} question={question} />
+        <QuestionEditor
+          key={question.id}
+          question={question}
+          onCopy={section.copyQuestion}
+          onDelete={section.removeQuestion}
+        />
       ))}
     </div>
   );
