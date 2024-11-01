@@ -12,6 +12,10 @@ export default {
     "./components/**/*.{html,js}",
   ],
   theme: {
+    screens: {
+      // when min-width 820px;
+      sm: "820px",
+    },
     extend: {
       colors,
       spacing: {
