@@ -1,7 +1,7 @@
 import Question from "./question.ts";
 import { makeAutoObservable } from "mobx";
 
-type SectionData = {
+export type SectionData = {
   id: number;
   title: string;
   description: string;
@@ -30,7 +30,9 @@ export default class Section implements SectionData {
     this.title = data.title;
     // 파라미터로 넘어온 디스크립션으로 초기화될 수 있게 설정
     this.description = data.description;
-    this.questions = data.questions;
+    // this.questions = data.questions;
+    // Section 내부에 여러개 Question 있을 수 있으니 이에 대한 Mobx 처리
+    this.questions = data.questions.map((question) => new Question(question));
   }
 
   setTitle(title: string) {
