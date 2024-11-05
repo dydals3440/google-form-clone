@@ -1,9 +1,11 @@
-import { makeAutoObservable } from "mobx";
-import { createContext, PropsWithChildren, useContext } from "react";
-import Section, { SectionData } from "../models/section.ts";
-import callApi from "../utils/api.ts";
+import { makeAutoObservable } from 'mobx';
+import { createContext, PropsWithChildren, useContext } from 'react';
+import Section, { SectionData } from '../models/section.ts';
+import callApi from '../utils/api.ts';
 
 class SurveyStore {
+  // 이메일 수집 여부 데이터 (설문에 저장됨.)
+  emailCollected: boolean;
   sections: Section[] = [];
   // 포커스된, 아이디의 질문을 추가하고 싶음.
   focusedSectionId: number | null = null;
@@ -12,6 +14,7 @@ class SurveyStore {
     makeAutoObservable(this, {}, { autoBind: true });
     this.sections = [new Section()];
     this.focusedSectionId = this.sections[0].id;
+    this.emailCollected = false;
   }
 
   setFocusedSectionId(id: number) {
@@ -27,7 +30,7 @@ class SurveyStore {
 
   addQuestion() {
     const section = this.sections.find(
-      (section) => section.id === this.focusedSectionId,
+      (section) => section.id === this.focusedSectionId
     );
 
     if (section) {
@@ -36,11 +39,12 @@ class SurveyStore {
   }
 
   fetchSurvey(id: number) {
-    callApi<{ sections: SectionData[] }>(`/surveys/${id}`).then(
-      ({ sections }) => {
-        this.sections = sections.map((section) => new Section(section));
-      },
-    );
+    callApi<{ sections: SectionData[]; emailCollected: boolean }>(
+      `/surveys/${id}`
+    ).then(({ sections, emailCollected }) => {
+      this.sections = sections.map((section) => new Section(section));
+      this.emailCollected = emailCollected;
+    });
   }
 }
 

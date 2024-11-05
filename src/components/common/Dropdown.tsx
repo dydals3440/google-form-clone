@@ -5,10 +5,10 @@ import {
   useCallback,
   useContext,
   RefObject,
-} from "react";
+} from 'react';
 
-import ArrowIcon from "../../assets/arrow.svg?react";
-import useOutsideClick from "../../hooks/common/useOutsideClick.ts";
+import ArrowIcon from '../../assets/arrow.svg?react';
+import useOutsideClick from '../../hooks/common/useOutsideClick.ts';
 
 interface DropdownProps<T> {
   defaultValue?: T;
@@ -30,9 +30,9 @@ export default function Dropdown<T>({
   const [opened, setOpened] = useState<boolean>(false);
   // -1 not selected
   const [selected, setSelected] = useState<number>(
-    defaultValue
+    defaultValue !== undefined
       ? options.findIndex((option) => option.value === defaultValue)
-      : -1,
+      : -1
   );
 
   // open과 close는 한번생성되면 절 대 변경되지 않는 것.
@@ -47,7 +47,7 @@ export default function Dropdown<T>({
       onChange?.(options[index].value);
       close();
     },
-    [close, onChange, options],
+    [close, onChange, options]
   );
 
   return (
@@ -61,7 +61,7 @@ export default function Dropdown<T>({
         onChange: handleChange,
       }}
     >
-      <div className="inline-block relative">
+      <div className='inline-block relative'>
         <DropdownButton placeholder={placeholder} />
         <DropdownMenu />
       </div>
@@ -87,7 +87,7 @@ interface DropdownContextType<T = unknown> {
 const DropdownContext = createContext<DropdownContextType | null>(null);
 
 export function DropdownButton({
-  placeholder = "select",
+  placeholder = 'select',
 }: {
   placeholder?: string;
 }) {
@@ -96,11 +96,11 @@ export function DropdownButton({
 
   return (
     <button
-      className="border border-gray300 rounded-10 min-w-197 p-14 pr-36 relative text-left"
+      className='border border-gray300 rounded-10 min-w-197 p-14 pr-36 relative text-left'
       onClick={open}
     >
-      {selected >= 0 ? options[selected].label : (placeholder ?? "")}
-      <span className="absolute right-12 top-1/2 transform -translate-y-1/2">
+      {selected >= 0 ? options[selected].label : placeholder ?? ''}
+      <span className='absolute right-12 top-1/2 transform -translate-y-1/2'>
         <ArrowIcon />
       </span>
     </button>
@@ -115,7 +115,7 @@ function DropdownMenu() {
   return opened ? (
     <div
       ref={containerRef as RefObject<HTMLDivElement>}
-      className="absolute left-0 top-62 border border-gray300 rounded-10 flex flex-col min-w-197 bg-white z-10"
+      className='absolute left-0 top-62 border border-gray300 rounded-10 flex flex-col min-w-197 bg-white z-10'
     >
       {options.map((option, index) => (
         <DropdownMenuItem
@@ -138,7 +138,7 @@ function DropdownMenuItem({
   return (
     <button
       // variant -> last:border-none
-      className="text-left p-14 border-b-1 border-gray-300 last:border-none"
+      className='text-left p-14 border-b-1 border-gray-300 last:border-none'
       onClick={onSelect}
     >
       {label}

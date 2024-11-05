@@ -1,36 +1,37 @@
-import { ReactNode, useState } from "react";
-import Input from "../common/Input.tsx";
-import { QuestionType } from "../../types/app.ts";
-import RadioIcon from "../../assets/radio.svg?react";
-import CheckboxIcon from "../../assets/checkbox.svg?react";
+import { ReactNode } from 'react';
+import Input from '../common/Input.tsx';
+import { QuestionType } from '../../types/app.ts';
+import RadioIcon from '../../assets/radio.svg?react';
+import CheckboxIcon from '../../assets/checkbox.svg?react';
+import Question from '../../models/question.ts';
+import { observer } from 'mobx-react-lite';
 
 interface OptionEditorProps {
-  type: "multipleChoice" | "checkbox" | "dropdown";
+  question: Question;
 }
 
-export default function OptionEditor({ type }: OptionEditorProps) {
-  const [options, setOptions] = useState<string[]>([""]);
+const OptionEditor = observer(function OptionEditor({
+  question: { options = [], setOption, type, setOptions },
+}: OptionEditorProps) {
   return (
     <div>
       {options.map((option, index) => (
-        <div key={index} className="flex items-center">
+        <div key={index} className='flex items-center'>
           {icons[type]}
           <Input
             value={option}
             onChange={(e) => {
-              const newOptions = [...options];
-              newOptions[index] = e.target.value;
-              setOptions(newOptions);
+              setOption(index, e.currentTarget.value);
             }}
           />
         </div>
       ))}
-      <div className="flex items-center mt-28">
+      <div className='flex items-center mt-28'>
         {icons[type]}
         <button
-          className="text-gray500 text-16"
+          className='text-gray500 text-16'
           onClick={() => {
-            setOptions((prev) => [...prev, ""]);
+            setOptions([...options, `옵션 ${options.length + 1}`]);
           }}
         >
           옵션 추가
@@ -38,11 +39,13 @@ export default function OptionEditor({ type }: OptionEditorProps) {
       </div>
     </div>
   );
-}
+});
 
 // 아이콘 포함 오브젝트
 const icons: Partial<Record<QuestionType, ReactNode>> = {
-  multipleChoice: <RadioIcon className="mr-14" />,
-  checkbox: <CheckboxIcon className="mr-14" />,
-  dropdown: <RadioIcon className="mr-14" />,
+  multipleChoice: <RadioIcon className='mr-14' />,
+  checkbox: <CheckboxIcon className='mr-14' />,
+  dropdown: <RadioIcon className='mr-14' />,
 };
+
+export default OptionEditor;

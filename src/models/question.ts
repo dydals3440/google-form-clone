@@ -1,5 +1,5 @@
-import { QuestionType } from "../types/app.ts";
-import { makeAutoObservable } from "mobx";
+import { QuestionType } from '../types/app.ts';
+import { makeAutoObservable } from 'mobx';
 
 type QuestionData = {
   id: number;
@@ -20,10 +20,10 @@ export default class Question implements QuestionData {
   constructor(
     data: QuestionData = {
       id: Date.now(),
-      title: "",
-      type: "shortText",
+      title: '',
+      type: 'shortText',
       required: false,
-    },
+    }
   ) {
     // Observable 하게 mobx가 관찰.
     // QuestionTypeEdtior에서 드롭다운에, 밸류값을 설정하도록 함, 자바스크립트 같은 경우에서, This의 값이
@@ -45,11 +45,11 @@ export default class Question implements QuestionData {
     this.type = type;
 
     if (
-      type === "multipleChoice" ||
-      type === "dropdown" ||
-      type === "checkbox"
+      type === 'multipleChoice' ||
+      type === 'dropdown' ||
+      type === 'checkbox'
     ) {
-      this.options = this.options ?? [""];
+      this.options = this.options ?? [''];
     } else {
       // 이 외에는 옵션즈가 있으면 안됨.
       this.options = undefined;
@@ -65,4 +65,11 @@ export default class Question implements QuestionData {
   };
 
   // TODO: 하나의 옵션을 변경할 수 있도록 하는 메서드를 추가합니다.
+  setOption(index: number, option: string) {
+    if (!this.options) {
+      return;
+    }
+
+    this.options[index] = option;
+  }
 }
