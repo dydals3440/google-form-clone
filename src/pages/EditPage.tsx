@@ -43,6 +43,7 @@ function EditPage() {
 
       <Modal opened={opened}>
         <SendModalContent
+          emailCollected={surveyStore.emailCollected}
           surveyId={parseInt(surveyId, 10)}
           onClose={() => setOpened(false)}
         />
