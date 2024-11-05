@@ -4,6 +4,7 @@ import Input from '../common/Input';
 import Dropdown from '../common/Dropdown';
 import Textarea, { AutoGrow } from '../common/Textarea';
 import Radio from '../common/Radio';
+import Checkbox from '../common/Checkbox';
 
 interface Props {
   question: Question;
@@ -17,7 +18,13 @@ export default function QuestionForm({ question }: Props) {
       return (
         <Input
           className='pb-16 pt-0 border-b-2 focus:border-b-main focus:bg-transparent w-full'
-          {...register(`${question.id}`)}
+          {...(register(`${question.id}`),
+          {
+            required: {
+              value: question.required,
+              message: '필수 항목입니다.',
+            },
+          })}
         />
       );
     case 'longText':
@@ -26,12 +33,28 @@ export default function QuestionForm({ question }: Props) {
           <Textarea
             rows={1}
             className='w-full focus:bg-transparent resize-none focus:border-b-main'
-            {...register(`${question.id}`)}
+            {...register(`${question.id}`, { required: question.required })}
           />
         </AutoGrow>
       );
     case 'checkbox':
-      return null;
+      return (
+        <div className='flex gap-y-20 flex-col'>
+          {question.options?.map((option) => (
+            <Checkbox
+              key={option}
+              label={option}
+              value={option}
+              {...register(`${question.id}`, {
+                required: {
+                  value: question.required,
+                  message: '필수 항목입니다.',
+                },
+              })}
+            />
+          ))}
+        </div>
+      );
     case 'date':
       return <Input type='date' {...register(`${question.id}`)} />;
     case 'dropdown':
@@ -50,8 +73,15 @@ export default function QuestionForm({ question }: Props) {
                 value: option,
               }))}
               onChange={field.onChange}
+              // register 대신 rules
             />
           )}
+          rules={{
+            required: {
+              value: question.required,
+              message: '필수 항목입니다.',
+            },
+          }}
         />
       );
     case 'multipleChoice':
@@ -62,13 +92,28 @@ export default function QuestionForm({ question }: Props) {
               key={option}
               label={option}
               value={option}
-              {...register(`${question.id}`)}
+              {...register(`${question.id}`, {
+                required: {
+                  value: question.required,
+                  message: '필수 항목입니다.',
+                },
+              })}
             />
           ))}
         </div>
       );
     case 'time':
-      return <Input type='time' {...register(`${question.id}`)} />;
+      return (
+        <Input
+          type='time'
+          {...register(`${question.id}`, {
+            required: {
+              value: question.required,
+              message: '필수 항목입니다.',
+            },
+          })}
+        />
+      );
     default:
       return null;
   }
