@@ -1,4 +1,4 @@
-import SectionEditorList from '../components/edit/SectionEditorList.tsx';
+import SectionListEditor from '../components/edit/SectionListEditor.tsx';
 import { useSurveyStore } from '../store/store.tsx';
 import callApi from '../utils/api.ts';
 import { toJS } from 'mobx';
@@ -39,7 +39,7 @@ function EditPage() {
       <Button className='absolute top-0 right-0' onClick={handleSubmit}>
         보내기
       </Button>
-      <SectionEditorList />
+      <SectionListEditor />
 
       <Modal opened={opened}>
         <SendModalContent

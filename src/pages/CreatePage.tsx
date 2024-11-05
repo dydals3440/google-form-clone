@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/common/Button.tsx';
-import SectionEditorList from '../components/edit/SectionEditorList.tsx';
+import SectionListEditor from '../components/edit/SectionListEditor.tsx';
 import { useSurveyStore } from '../store/store.tsx';
 import callApi from '../utils/api.ts';
 import { toJS } from 'mobx';
@@ -25,7 +25,7 @@ function CreatePage() {
       <Button className='absolute -top-0 right-0' onClick={handleSubmit}>
         생성하기
       </Button>
-      <SectionEditorList />
+      <SectionListEditor />
     </>
   );
 }
