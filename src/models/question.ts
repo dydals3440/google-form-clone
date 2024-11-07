@@ -1,14 +1,5 @@
-import { QuestionType } from '../types/app.ts';
+import { QuestionData, QuestionType } from '../types/app.ts';
 import { makeAutoObservable } from 'mobx';
-
-type QuestionData = {
-  id: number;
-  title: string;
-  type: QuestionType;
-  required: boolean;
-  // 객관식 or 드롭다운, 질문에는 옵션이 있음.
-  options?: string[];
-};
 
 export default class Question implements QuestionData {
   id: number;

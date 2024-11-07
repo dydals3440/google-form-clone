@@ -1,7 +1,8 @@
 import { makeAutoObservable } from 'mobx';
 import { createContext, PropsWithChildren, useContext } from 'react';
-import Section, { SectionData } from '../models/section.ts';
+import Section from '../models/section.ts';
 import callApi from '../utils/api.ts';
+import { SectionData } from '../types/app.ts';
 
 class SurveyStore {
   // 이메일 수집 여부 데이터 (설문에 저장됨.)
@@ -51,7 +52,6 @@ class SurveyStore {
 // Store 인스턴스 생성.
 const surveyStore = new SurveyStore();
 
-// eslint-disable-next-line react-refresh/only-export-components
 const SurveyStoreContext = createContext(surveyStore);
 // eslint-disable-next-line react-refresh/only-export-components
 export const useSurveyStore = () => useContext(SurveyStoreContext);

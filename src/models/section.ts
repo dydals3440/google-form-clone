@@ -1,12 +1,6 @@
-import Question from "./question.ts";
-import { makeAutoObservable } from "mobx";
-
-export type SectionData = {
-  id: number;
-  title: string;
-  description: string;
-  questions: Question[];
-};
+import { SectionData } from '../types/app.ts';
+import Question from './question.ts';
+import { makeAutoObservable } from 'mobx';
 
 export default class Section implements SectionData {
   // 1. 필드 정의
@@ -18,11 +12,11 @@ export default class Section implements SectionData {
   constructor(
     data: SectionData = {
       id: Date.now(),
-      title: "",
-      description: "",
+      title: '',
+      description: '',
       // 무조건 질문 한개는 존재하게 함.
       questions: [new Question()],
-    },
+    }
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
 
@@ -58,7 +52,7 @@ export default class Section implements SectionData {
         new Question({
           ...question,
           id: Date.now(),
-        }),
+        })
       );
     }
   }
